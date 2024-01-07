@@ -15,13 +15,14 @@ import unittest
 class TestGithubOrgClient(unittest.TestCase):
     """Test module for the GithubOrgClient class.
     """
-    response_dict1 = {"name": "google"}
-    response_dict2 = {"name": "abc"}
-
     @parameterized.expand([
-        ('google', response_dict1), ('abc', response_dict2)])
-    @patch('client.get_json',)
-    def test_org(self, input: str, expected: Dict, mock_get_json):
+        ("google", {'name': "google"}),
+        ("abc", {'name': "abc"}),
+    ])
+    @patch(
+        "client.get_json",
+    )
+    def test_org(self, input: str, expected: Dict, mocked_fxn):
         """
         Test the org method of the GithubOrgClient class.
 
@@ -30,13 +31,12 @@ class TestGithubOrgClient(unittest.TestCase):
             expected (Dict): The expected output.
             mock_get_json (Mock): A mock for the get_json function.
         """
-        mock_get_json.return_value = expected
-        org_client = GithubOrgClient(input)
-
-        self.assertEqual(org_client.org(), expected)
-
-        expected_url = f"https://api.github.com/orgs/{input}"
-        mock_get_json.assert_called_once_with(expected_url)
+        mocked_fxn.return_value = expected
+        gh_org_client = GithubOrgClient(input)
+        self.assertEqual(gh_org_client.org(), expected)
+        mocked_fxn.assert_called_once_with(
+            "https://api.github.com/orgs/{}".format(input)
+        )
 
     @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org):
