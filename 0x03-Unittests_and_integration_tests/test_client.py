@@ -16,7 +16,8 @@ class TestGithubOrgClient(unittest.TestCase):
     response_dict1 = {"name": "google"}
     response_dict2 = {"name": "abc"}
 
-    @parameterized.expand([('google', response_dict1), ('abc', response_dict2)])
+    @parameterized.expand([
+        ('google', response_dict1), ('abc', response_dict2)])
     @patch('client.get_json',)
     def test_org(self, input: str, expected: Dict, mock_get_json):
         """
