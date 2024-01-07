@@ -4,10 +4,9 @@ Test module for the GithubOrgClient class.
 """
 
 from parameterized import parameterized
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 from client import GithubOrgClient
 from typing import Dict
-from utils import get_json
 import unittest
 
 
