@@ -4,7 +4,7 @@ Test module for the GithubOrgClient class.
 """
 
 from parameterized import parameterized, parameterized_class
-from unittest.mock import Mock, patch, PropertyMock
+from unittest.mock import MagicMock, Mock, patch, PropertyMock
 from client import GithubOrgClient
 from fixtures import TEST_PAYLOAD
 from requests import HTTPError
@@ -22,7 +22,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch(
         "client.get_json",
     )
-    def test_org(self, input: str, expected: Dict, mocked_fxn):
+    def test_org(self, input: str, expected: Dict, mocked_fxn: MagicMock):
         """
         Test the org method of the GithubOrgClient class.
 
@@ -31,7 +31,7 @@ class TestGithubOrgClient(unittest.TestCase):
             expected (Dict): The expected output.
             mock_get_json (Mock): A mock for the get_json function.
         """
-        mocked_fxn.return_value = expected
+        mocked_fxn.return_value = MagicMock(return_value=expected)
         gh_org_client = GithubOrgClient(input)
         self.assertEqual(gh_org_client.org(), expected)
         mocked_fxn.assert_called_once_with(
