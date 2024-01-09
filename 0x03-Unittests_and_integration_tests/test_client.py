@@ -40,6 +40,10 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org):
+        """
+        This test case verifies the correct functioning
+        of the '_public_repos_url' method.
+        """
         mock_payload = {
             "public_repos_url": "https://api.github.com/orgs/testorg/repos"
         }
